@@ -63,12 +63,7 @@
 							"notebookPath": "/Users/colameo@minditsolutions.it/Example",
 							"baseParameters": {
 								"name": "marcello"
-							},
-							"libraries": [
-								{
-									"jar": ""
-								}
-							]
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks_LinkedService",
