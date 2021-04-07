@@ -60,7 +60,14 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Shared/00_RAW_DATA/Trace_raw"
+							"notebookPath": "/Shared/00_RAW_DATA/Trace_raw",
+							"libraries": [
+								{
+									"pypi": {
+										"package": "openpyxl"
+									}
+								}
+							]
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks_LinkedService",
