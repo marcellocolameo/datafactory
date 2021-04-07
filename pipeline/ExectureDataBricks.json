@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook1",
+				"name": "raw_data_trace",
 				"description": "try to execute a notebook",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
@@ -16,10 +16,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/colameo@minditsolutions.it/Example",
-					"baseParameters": {
-						"name": "marcello"
-					}
+					"notebookPath": "/Shared/00_RAW_DATA/Trace_raw"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks_LinkedService",
