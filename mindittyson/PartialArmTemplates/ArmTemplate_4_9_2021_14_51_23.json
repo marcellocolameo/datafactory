@@ -1,0 +1,581 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "mindittyson"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/input_file')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is a pipeline used to create hippo input files\n",
+				"activities": [
+					{
+						"name": "Customer_Attributes_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Customer_attributes_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Financial_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Financial_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Fiscal_Calendar_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Fiscal_calendar_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Invoices_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Invoices_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Master_Data_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Master_data_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Product_Attributes_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Product_attributes_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Syndicated_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Syndicated_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Trace_Raw",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Trace_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Customer_Attributes_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Customer_Attributes_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Customer_attributes_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Financial_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Financial_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/00_RAW_DATA/Financial_raw"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Invoices_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Invoices_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Invoice_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "OffInvoices_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Invoices_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/OffInvoice_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Product_Attributes_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Product_Attributes_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Product_attributes_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Syndicated_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Syndicated_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Syndicated_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Trace_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Trace_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Trace_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Trace_Check",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Trace_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Trace_clean_check"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Syndicated_Check",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Syndicated_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Syndicated_clean_check"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Financial_Check",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Financial_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Financial_check"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Fiscal_Calendar_Clean",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Fiscal_Calendar_Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/01_RAW_DATA_CLEAN/Fiscal_calendar_clean"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "GenerateHippoFiles",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Customer_Attributes_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Financial_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Fiscal_Calendar_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Invoices_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "OffInvoices_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Product_Attributes_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Syndicated_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Trace_Clean",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/03_GENERATE_HIPPO_FILE/Generate_Hippo_Files"
+						},
+						"linkedServiceName": {
+							"referenceName": "databrickstyson",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/databrickstyson')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/databrickstyson')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "link to databricks tyson",
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-2527974990992414.14.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "**********"
+					},
+					"newClusterNodeType": "Standard_D96as_v4",
+					"newClusterNumOfWorker": "2:8",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "7.6.x-cpu-ml-scala2.12",
+					"newClusterInitScripts": []
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
